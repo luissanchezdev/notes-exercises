@@ -1,0 +1,11 @@
+.hide {
+  display: none;
+}
+
+.visible {
+  display: block;
+  border: 2px solid red;
+  color: red;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
