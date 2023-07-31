@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
 import Note from './components/Note'
+import Togglable from './components/Togglable';
+import LoginForm from './components/Form';
 import Notification from './components/Notification'
 import noteService from './services/notes'
 import './App.css'
@@ -11,6 +13,7 @@ const App = () => {
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
+  const noteFormRef = useRef()
 
   useEffect(() => {
     noteService
@@ -21,6 +24,7 @@ const App = () => {
   }, [])
 
   const addNote = (event) => {
+    noteFormRef.current.toggleVisibility(false)
     event.preventDefault()
     const noteObject = {
       content: newNote,
@@ -58,6 +62,7 @@ const App = () => {
         },5000)
         setNotes(notes.filter(n => n.id !== id))
       })
+    
   }
 
   return (
@@ -91,6 +96,12 @@ const App = () => {
         <input value={newNote} onChange={handleNoteChange} />
         <button type="submit">save</button>
       </form>
+      <div>
+        <h3>Form example login</h3>
+        <Togglable buttonLabel={'Example Form'} ref={ noteFormRef }>
+          <LoginForm />
+        </Togglable>
+      </div>
     </div>
   )
 }
